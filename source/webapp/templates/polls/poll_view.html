@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block nav %}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url "create_poll" %}">Create Poll</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url "update_poll" poll.pk %}">Edit</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url "poll_choice_create" poll.pk %}">Add a choice</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="{% url "delete_poll" poll.pk %}">Delete</a>
+    </li>
+{% endblock %}
+
+{% block content %}
+    {{ test }}
+    <p>
+        Question: {{ poll.question }}
+    </p>
+    <p>
+        Created at: {{ poll.created_at }}
+    </p>
+    <h3>Choices to the question</h3>
+    <div class="row">
+        {% for choice in choices %}
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ choice.choice_text }}</h5>
+                        <a href="{% url "update_choice" choice.pk %}">Edit</a>
+                        <a href="{% url "delete_choice" choice.pk %}">Delete</a>
+                        <a href="{% url "create_answer" poll.pk %}">Survey</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p>There are no choices</p>
+        {% endfor %}
+    {% if is_paginated %}
+        {% include "partial/pagination.html" %}
+    {% endif %}
+    </div>
+    <a href="{% url "index" %}">Main</a>
+
+    <div class="modal fade" id="pollDeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="pollDeleteModal">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete the poll {{ poll.question }}?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <form action="{% url "delete_poll" poll.pk %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Yes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

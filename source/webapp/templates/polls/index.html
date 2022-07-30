@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+{% block nav %}
+    <li class="nav-item">
+        <a class="nav-link"href="{% url "create_poll" %} ">Create poll</a>
+    </li>
+{% endblock %}
+{% block content %}
+    <h1>Polls</h1>
+    <div class="row">
+        {% for poll in polls %}
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ poll.question }}</h5>
+                        <a href="{{ poll.get_absolute_url }}" class="card-link">More</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+        {% endfor %}
+    {% if is_paginated %}
+        {% include "partial/pagination.html" %}
+    {% endif %}
+    </div>
+{% endblock %}
