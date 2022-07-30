@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Update Choice{% endblock %}
+
+{% block content %}
+    <h1>Update Choice</h1>
+    <form action="" method="post">
+        {% include "partial/form.html" with button_text="Update" %}
+    </form>
+    <a href="{% url "poll_view" choice.poll.pk %}">Назад</a>
+    <a href="{% url "index" %}">Main</a>
+{% endblock %}
