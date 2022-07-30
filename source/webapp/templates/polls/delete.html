@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Delete Poll{% endblock %}
+
+{% block content %}
+     <h2>Input the name of the poll ({{ poll.question }}) to delete</h2>
+    <form action="" method="post">
+        {% csrf_token %}
+        {% include "partial/form.html" with button_text="Delete" %}
+    </form>
+    <a href="{% url "poll_view" poll.pk %}">Back</a>
+{% endblock %}
