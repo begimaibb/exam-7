@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Create answer{% endblock %}
+
+{% block content %}
+    <h1>Create Answer</h1>
+    <p>{{ poll_data.question }}</p>
+    <form action="" method="post">
+        {% include "partial/form.html" with button_text="Create" %}
+    </form>
+    <a href="{% url "index" %}">Main</a>
+{% endblock %}
